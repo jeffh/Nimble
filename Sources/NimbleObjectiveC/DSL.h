@@ -1,15 +1,15 @@
 #import <Foundation/Foundation.h>
 
-@class NMBExpectation;
-@class NMBObjCBeCloseToMatcher;
-@class NMBObjCRaiseExceptionMatcher;
-@protocol NMBMatcher;
-
+#import "DSL+CPPBridge.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-
+#if __cplusplus
+#define NIMBLE_OVERLOADABLE
+#else
 #define NIMBLE_OVERLOADABLE __attribute__((overloadable))
+#endif
+
 #define NIMBLE_EXPORT FOUNDATION_EXPORT
 #define NIMBLE_EXPORT_INLINE FOUNDATION_STATIC_INLINE
 
@@ -30,14 +30,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 #define DEFINE_NMB_EXPECT_OVERLOAD(TYPE, EXPR) \
         NIMBLE_EXPORT_INLINE NIMBLE_OVERLOADABLE \
-        NMBExpectation *NMB_expect(TYPE(^actualBlock)(), NSString *file, NSUInteger line) { \
-            return NMB_expect(^id { return EXPR; }, file, line); \
+        NMBExpectationImpl *NMB_expect(TYPE(^actualBlock)(), NSString *file, NSUInteger line) { \
+            return NMB_expect_impl(^id { return EXPR; }, file, line); \
         }
 
-    NIMBLE_EXPORT NIMBLE_OVERLOADABLE
-    NMBExpectation *NMB_expect(id(^actualBlock)(), NSString *file, NSUInteger line);
+    NIMBLE_EXPORT
+    NMBExpectationImpl *NMB_expect_impl(id(^actualBlock)(), NSString *file, NSUInteger line);
 
     // overloaded dispatch for nils - expect(nil)
+    DEFINE_NMB_EXPECT_OVERLOAD(id, actualBlock());
     DEFINE_NMB_EXPECT_OVERLOAD(void*, nil)
     DEFINE_NMB_EXPECT_OVERLOAD(NSRange, NIMBLE_VALUE_OF(actualBlock()))
     DEFINE_NMB_EXPECT_OVERLOAD(long, @(actualBlock()))
@@ -60,25 +61,23 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 
-NIMBLE_EXPORT NMBExpectation *NMB_expectAction(void(^actualBlock)(), NSString *file, NSUInteger line);
+NIMBLE_EXPORT NMBExpectationImpl *NMB_expectAction(void(^actualBlock)(), NSString *file, NSUInteger line);
 
 
 
 #define DEFINE_OVERLOAD(TYPE, EXPR) \
         NIMBLE_EXPORT_INLINE NIMBLE_OVERLOADABLE \
         id<NMBMatcher> NMB_equal(TYPE expectedValue) { \
-            return NMB_equal((EXPR)); \
+            return NMB_equal_impl((EXPR)); \
         } \
         NIMBLE_SHORT_OVERLOADED(id<NMBMatcher> equal(TYPE expectedValue), NMB_equal(expectedValue));
 
 
-    NIMBLE_EXPORT NIMBLE_OVERLOADABLE
-    id<NMBMatcher> NMB_equal(__nullable id expectedValue);
-
-    NIMBLE_SHORT_OVERLOADED(id<NMBMatcher> equal(__nullable id expectedValue),
-                            NMB_equal(expectedValue));
+    NIMBLE_EXPORT
+    id<NMBMatcher> NMB_equal_impl(__nullable id expectedValue);
 
     // overloaded dispatch for nils - expect(nil)
+    DEFINE_OVERLOAD(id, expectedValue)
     DEFINE_OVERLOAD(void*__nullable, (id)nil)
     DEFINE_OVERLOAD(NSRange, NIMBLE_VALUE_OF(expectedValue))
     DEFINE_OVERLOAD(long, @(expectedValue))
@@ -102,18 +101,16 @@ NIMBLE_EXPORT NMBExpectation *NMB_expectAction(void(^actualBlock)(), NSString *f
 #define DEFINE_OVERLOAD(TYPE, EXPR) \
         NIMBLE_EXPORT_INLINE NIMBLE_OVERLOADABLE \
         id<NMBMatcher> NMB_haveCount(TYPE expectedValue) { \
-            return NMB_haveCount((EXPR)); \
+            return NMB_haveCount_impl((EXPR)); \
         } \
         NIMBLE_SHORT_OVERLOADED(id<NMBMatcher> haveCount(TYPE expectedValue), \
             NMB_haveCount(expectedValue));
 
 
-    NIMBLE_EXPORT NIMBLE_OVERLOADABLE
-    id<NMBMatcher> NMB_haveCount(id expectedValue);
+    NIMBLE_EXPORT
+    id<NMBMatcher> NMB_haveCount_impl(id expectedValue);
 
-    NIMBLE_SHORT_OVERLOADED(id<NMBMatcher> haveCount(id expectedValue),
-                            NMB_haveCount(expectedValue));
-
+    DEFINE_OVERLOAD(id, expectedValue);
     DEFINE_OVERLOAD(long, @(expectedValue))
     DEFINE_OVERLOAD(unsigned long, @(expectedValue))
     DEFINE_OVERLOAD(int, @(expectedValue))
@@ -127,18 +124,17 @@ NIMBLE_EXPORT NMBExpectation *NMB_expectAction(void(^actualBlock)(), NSString *f
 
 #define DEFINE_OVERLOAD(TYPE, EXPR) \
         NIMBLE_EXPORT_INLINE NIMBLE_OVERLOADABLE \
-        NMBObjCBeCloseToMatcher *NMB_beCloseTo(TYPE expectedValue) { \
-            return NMB_beCloseTo((NSNumber *)(EXPR)); \
+        NMBObjCBeCloseToMatcherImpl *NMB_beCloseTo(TYPE expectedValue) { \
+            return NMB_beCloseTo_impl((NSNumber *)(EXPR)); \
         } \
-        NIMBLE_SHORT_OVERLOADED(NMBObjCBeCloseToMatcher *beCloseTo(TYPE expectedValue), \
+        NIMBLE_SHORT_OVERLOADED(NMBObjCBeCloseToMatcherImpl *beCloseTo(TYPE expectedValue), \
             NMB_beCloseTo(expectedValue));
 
-    NIMBLE_EXPORT NIMBLE_OVERLOADABLE NMBObjCBeCloseToMatcher *NMB_beCloseTo(NSNumber *expectedValue);
-    NIMBLE_SHORT_OVERLOADED(NMBObjCBeCloseToMatcher *beCloseTo(NSNumber *expectedValue),
-                            NMB_beCloseTo(expectedValue));
+    NIMBLE_EXPORT
+    NMBObjCBeCloseToMatcherImpl *NMB_beCloseTo_impl(NSNumber *expectedValue);
 
+    DEFINE_OVERLOAD(id, expectedValue)
     // it would be better to only overload float & double, but zero becomes ambigious
-
     DEFINE_OVERLOAD(long, @(expectedValue))
     DEFINE_OVERLOAD(unsigned long, @(expectedValue))
     DEFINE_OVERLOAD(int, @(expectedValue))
@@ -170,18 +166,14 @@ NIMBLE_EXPORT_INLINE id<NMBMatcher> beginWith(id itemElementOrSubstring) {
 #define DEFINE_OVERLOAD(TYPE, EXPR) \
         NIMBLE_EXPORT_INLINE NIMBLE_OVERLOADABLE \
         id<NMBMatcher> NMB_beGreaterThan(TYPE expectedValue) { \
-            return NMB_beGreaterThan((EXPR)); \
+            return NMB_beGreaterThan_impl((EXPR)); \
         } \
         NIMBLE_SHORT_OVERLOADED(id<NMBMatcher> beGreaterThan(TYPE expectedValue), NMB_beGreaterThan(expectedValue));
 
-    NIMBLE_EXPORT NIMBLE_OVERLOADABLE
-    id<NMBMatcher> NMB_beGreaterThan(NSNumber *expectedValue);
+    NIMBLE_EXPORT
+    id<NMBMatcher> NMB_beGreaterThan_impl(NSNumber *expectedValue);
 
-    NIMBLE_EXPORT_INLINE NIMBLE_OVERLOADABLE
-    id<NMBMatcher> beGreaterThan(NSNumber *expectedValue) {
-        return NMB_beGreaterThan(expectedValue);
-    }
-
+    DEFINE_OVERLOAD(id, expectedValue)
     DEFINE_OVERLOAD(long, @(expectedValue))
     DEFINE_OVERLOAD(unsigned long, @(expectedValue))
     DEFINE_OVERLOAD(int, @(expectedValue))
@@ -198,19 +190,15 @@ NIMBLE_EXPORT_INLINE id<NMBMatcher> beginWith(id itemElementOrSubstring) {
 #define DEFINE_OVERLOAD(TYPE, EXPR) \
         NIMBLE_EXPORT_INLINE NIMBLE_OVERLOADABLE \
         id<NMBMatcher> NMB_beGreaterThanOrEqualTo(TYPE expectedValue) { \
-            return NMB_beGreaterThanOrEqualTo((EXPR)); \
+            return NMB_beGreaterThanOrEqualTo_impl((EXPR)); \
         } \
         NIMBLE_SHORT_OVERLOADED(id<NMBMatcher> beGreaterThanOrEqualTo(TYPE expectedValue), \
             NMB_beGreaterThanOrEqualTo(expectedValue));
 
-    NIMBLE_EXPORT NIMBLE_OVERLOADABLE
-    id<NMBMatcher> NMB_beGreaterThanOrEqualTo(NSNumber *expectedValue);
+    NIMBLE_EXPORT
+    id<NMBMatcher> NMB_beGreaterThanOrEqualTo_impl(NSNumber *expectedValue);
 
-    NIMBLE_EXPORT_INLINE NIMBLE_OVERLOADABLE
-    id<NMBMatcher> beGreaterThanOrEqualTo(NSNumber *expectedValue) {
-        return NMB_beGreaterThanOrEqualTo(expectedValue);
-    }
-
+    DEFINE_OVERLOAD(id, expectedValue)
     DEFINE_OVERLOAD(long, @(expectedValue))
     DEFINE_OVERLOAD(unsigned long, @(expectedValue))
     DEFINE_OVERLOAD(int, @(expectedValue))
@@ -237,19 +225,15 @@ NIMBLE_SHORT(id<NMBMatcher> be(id expectedInstance),
 #define DEFINE_OVERLOAD(TYPE, EXPR) \
         NIMBLE_EXPORT_INLINE NIMBLE_OVERLOADABLE \
         id<NMBMatcher> NMB_beLessThan(TYPE expectedValue) { \
-            return NMB_beLessThan((EXPR)); \
+            return NMB_beLessThan_impl((EXPR)); \
         } \
         NIMBLE_SHORT_OVERLOADED(id<NMBMatcher> beLessThan(TYPE expectedValue), \
             NMB_beLessThan(expectedValue));
 
-    NIMBLE_EXPORT NIMBLE_OVERLOADABLE
-    id<NMBMatcher> NMB_beLessThan(NSNumber *expectedValue);
+    NIMBLE_EXPORT
+    id<NMBMatcher> NMB_beLessThan_impl(NSNumber *expectedValue);
 
-    NIMBLE_EXPORT_INLINE NIMBLE_OVERLOADABLE
-    id<NMBMatcher> beLessThan(NSNumber *expectedValue) {
-        return NMB_beLessThan(expectedValue);
-    }
-
+    DEFINE_OVERLOAD(id, expectedValue)
     DEFINE_OVERLOAD(long, @(expectedValue))
     DEFINE_OVERLOAD(unsigned long, @(expectedValue))
     DEFINE_OVERLOAD(int, @(expectedValue))
@@ -267,20 +251,16 @@ NIMBLE_SHORT(id<NMBMatcher> be(id expectedInstance),
 #define DEFINE_OVERLOAD(TYPE, EXPR) \
     NIMBLE_EXPORT_INLINE NIMBLE_OVERLOADABLE \
     id<NMBMatcher> NMB_beLessThanOrEqualTo(TYPE expectedValue) { \
-        return NMB_beLessThanOrEqualTo((EXPR)); \
+        return NMB_beLessThanOrEqualTo_impl((EXPR)); \
     } \
     NIMBLE_SHORT_OVERLOADED(id<NMBMatcher> beLessThanOrEqualTo(TYPE expectedValue), \
         NMB_beLessThanOrEqualTo(expectedValue));
 
 
-    NIMBLE_EXPORT NIMBLE_OVERLOADABLE
-    id<NMBMatcher> NMB_beLessThanOrEqualTo(NSNumber *expectedValue);
+    NIMBLE_EXPORT
+    id<NMBMatcher> NMB_beLessThanOrEqualTo_impl(NSNumber *expectedValue);
 
-    NIMBLE_EXPORT_INLINE NIMBLE_OVERLOADABLE
-    id<NMBMatcher> beLessThanOrEqualTo(NSNumber *expectedValue) {
-        return NMB_beLessThanOrEqualTo(expectedValue);
-    }
-
+    DEFINE_OVERLOAD(id, expectedValue)
     DEFINE_OVERLOAD(long, @(expectedValue))
     DEFINE_OVERLOAD(unsigned long, @(expectedValue))
     DEFINE_OVERLOAD(int, @(expectedValue))
@@ -332,8 +312,8 @@ NIMBLE_EXPORT id<NMBMatcher> NMB_endWith(id itemElementOrSubstring);
 NIMBLE_SHORT(id<NMBMatcher> endWith(id itemElementOrSubstring),
              NMB_endWith(itemElementOrSubstring));
 
-NIMBLE_EXPORT NMBObjCRaiseExceptionMatcher *NMB_raiseException(void);
-NIMBLE_SHORT(NMBObjCRaiseExceptionMatcher *raiseException(void),
+NIMBLE_EXPORT NMBObjCRaiseExceptionMatcherImpl *NMB_raiseException(void);
+NIMBLE_SHORT(NMBObjCRaiseExceptionMatcherImpl *raiseException(void),
              NMB_raiseException());
 
 NIMBLE_EXPORT id<NMBMatcher> NMB_match(id expectedValue);
@@ -360,8 +340,6 @@ NIMBLE_EXPORT void NMB_failWithMessage(NSString *msg, NSString *file, NSUInteger
 
 NIMBLE_EXPORT NMBWaitUntilTimeoutBlock NMB_waitUntilTimeoutBuilder(NSString *file, NSUInteger line);
 NIMBLE_EXPORT NMBWaitUntilBlock NMB_waitUntilBuilder(NSString *file, NSUInteger line);
-
-NIMBLE_EXPORT void NMB_failWithMessage(NSString *msg, NSString *file, NSUInteger line);
 
 #define NMB_waitUntilTimeout NMB_waitUntilTimeoutBuilder(@(__FILE__), __LINE__)
 #define NMB_waitUntil NMB_waitUntilBuilder(@(__FILE__), __LINE__)

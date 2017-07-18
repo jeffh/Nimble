@@ -197,6 +197,15 @@
 		1F5DF1A91BDCA10200C3A531 /* MatchTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB4D5EF19FE442800E9D9FE /* MatchTest.swift */; };
 		1F5DF1AA1BDCA10200C3A531 /* RaisesExceptionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F925EEB195C12C800ED456B /* RaisesExceptionTest.swift */; };
 		1F5DF1AB1BDCA10200C3A531 /* ThrowErrorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EA59621B551ED2002D767E /* ThrowErrorTest.swift */; };
+		1F766B5A1F1DD2E000C628BC /* SupportsObjCPP.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F766B591F1DD2E000C628BC /* SupportsObjCPP.mm */; };
+		1F766B5B1F1DD2E000C628BC /* SupportsObjCPP.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F766B591F1DD2E000C628BC /* SupportsObjCPP.mm */; };
+		1F766B5C1F1DD2E000C628BC /* SupportsObjCPP.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1F766B591F1DD2E000C628BC /* SupportsObjCPP.mm */; };
+		1F766B5F1F1DD54A00C628BC /* DSL+CPPBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F766B5D1F1DD54A00C628BC /* DSL+CPPBridge.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1F766B601F1DD54A00C628BC /* DSL+CPPBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F766B5D1F1DD54A00C628BC /* DSL+CPPBridge.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1F766B611F1DD54A00C628BC /* DSL+CPPBridge.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F766B5D1F1DD54A00C628BC /* DSL+CPPBridge.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1F766B621F1DD54A00C628BC /* DSL+CPPBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F766B5E1F1DD54A00C628BC /* DSL+CPPBridge.m */; };
+		1F766B631F1DD54A00C628BC /* DSL+CPPBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F766B5E1F1DD54A00C628BC /* DSL+CPPBridge.m */; };
+		1F766B641F1DD54A00C628BC /* DSL+CPPBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F766B5E1F1DD54A00C628BC /* DSL+CPPBridge.m */; };
 		1F8A37B01B7C5042001C8357 /* ObjCSyncTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F8A37AF1B7C5042001C8357 /* ObjCSyncTest.m */; };
 		1F8A37B11B7C5042001C8357 /* ObjCSyncTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F8A37AF1B7C5042001C8357 /* ObjCSyncTest.m */; };
 		1F91DD2D1C74BF36002C309F /* BeVoidTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F91DD2C1C74BF36002C309F /* BeVoidTest.swift */; };
@@ -531,6 +540,9 @@
 		1F4BB8B31DACA0D00048464B /* ThrowAssertionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThrowAssertionTest.swift; sourceTree = "<group>"; };
 		1F5DF1551BDCA0CE00C3A531 /* Nimble.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Nimble.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F5DF15E1BDCA0CE00C3A531 /* NimbleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NimbleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1F766B591F1DD2E000C628BC /* SupportsObjCPP.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SupportsObjCPP.mm; sourceTree = "<group>"; };
+		1F766B5D1F1DD54A00C628BC /* DSL+CPPBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DSL+CPPBridge.h"; sourceTree = "<group>"; };
+		1F766B5E1F1DD54A00C628BC /* DSL+CPPBridge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DSL+CPPBridge.m"; sourceTree = "<group>"; };
 		1F8A37AF1B7C5042001C8357 /* ObjCSyncTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ObjCSyncTest.m; sourceTree = "<group>"; };
 		1F91DD2C1C74BF36002C309F /* BeVoidTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeVoidTest.swift; sourceTree = "<group>"; };
 		1F91DD301C74BF61002C309F /* BeVoid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeVoid.swift; sourceTree = "<group>"; };
@@ -755,6 +767,8 @@
 			isa = PBXGroup;
 			children = (
 				F8A1BE321CB3777F00031679 /* CurrentTestCaseTracker.h */,
+				1F766B5D1F1DD54A00C628BC /* DSL+CPPBridge.h */,
+				1F766B5E1F1DD54A00C628BC /* DSL+CPPBridge.m */,
 				1F1871BC1CA89EDB00A34BF2 /* DSL.h */,
 				1F1871BD1CA89EDB00A34BF2 /* DSL.m */,
 				1F1871BE1CA89EDB00A34BF2 /* NMBExceptionCapture.h */,
@@ -978,6 +992,7 @@
 				DDEFAEB31A93CBE6005CA37A /* ObjCAllPassTest.m */,
 				7B5358C11C39155600A23FAA /* ObjCSatisfyAnyOfTest.m */,
 				8DF1C3F61C94FC75004B2D36 /* ObjcStringersTest.m */,
+				1F766B591F1DD2E000C628BC /* SupportsObjCPP.mm */,
 			);
 			path = objc;
 			sourceTree = "<group>";
@@ -1015,6 +1030,7 @@
 				1F1871C51CA89EDB00A34BF2 /* DSL.h in Headers */,
 				1F1871C71CA89EDB00A34BF2 /* NMBExceptionCapture.h in Headers */,
 				1F1A742F1940169200FFFC47 /* Nimble.h in Headers */,
+				1F766B601F1DD54A00C628BC /* DSL+CPPBridge.h in Headers */,
 				1F12BEE31E7791B9006952EC /* CwlCatchException.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1026,6 +1042,7 @@
 				1F1871E21CA89EF600A34BF2 /* NMBStringify.h in Headers */,
 				1F1871E01CA89EF600A34BF2 /* DSL.h in Headers */,
 				1F1871E11CA89EF600A34BF2 /* NMBExceptionCapture.h in Headers */,
+				1F766B611F1DD54A00C628BC /* DSL+CPPBridge.h in Headers */,
 				1F12BEA81E77902A006952EC /* CwlPreconditionTesting.h in Headers */,
 				1F12BEEA1E77ABE3006952EC /* CwlMachBadInstructionHandler.h in Headers */,
 				1F4999A61DBF2DD100BF8877 /* Nimble.h in Headers */,
@@ -1042,6 +1059,7 @@
 				1F1871DD1CA89EF500A34BF2 /* DSL.h in Headers */,
 				1F1871DE1CA89EF500A34BF2 /* NMBExceptionCapture.h in Headers */,
 				1F925EC7195C0DD100ED456B /* Nimble.h in Headers */,
+				1F766B5F1F1DD54A00C628BC /* DSL+CPPBridge.h in Headers */,
 				1F12BEE21E7791B9006952EC /* CwlCatchException.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1319,6 +1337,7 @@
 				7B13BA0B1DD361D200C9098C /* ContainElementSatisfying.swift in Sources */,
 				1FCF91531C61C8A400B15DCB /* PostNotification.swift in Sources */,
 				1FD8CD2E1968AB07008ED995 /* AssertionRecorder.swift in Sources */,
+				1F766B631F1DD54A00C628BC /* DSL+CPPBridge.m in Sources */,
 				29EA59661B551EE6002D767E /* ThrowError.swift in Sources */,
 				1FD8CD5A1968AB07008ED995 /* Equal.swift in Sources */,
 				1FD8CD4C1968AB07008ED995 /* BeLessThan.swift in Sources */,
@@ -1368,6 +1387,7 @@
 				1F925F0E195C18F500ED456B /* BeLessThanOrEqualToTest.swift in Sources */,
 				1F4A56661A3B305F009E1637 /* ObjCAsyncTest.m in Sources */,
 				1F925EFC195C186800ED456B /* BeginWithTest.swift in Sources */,
+				1F766B5B1F1DD2E000C628BC /* SupportsObjCPP.mm in Sources */,
 				1F14FB64194180C5009F2A08 /* utils.swift in Sources */,
 				DDB4D5F019FE442800E9D9FE /* MatchTest.swift in Sources */,
 				1F4A56731A3B3210009E1637 /* ObjCBeginWithTest.m in Sources */,
@@ -1456,6 +1476,7 @@
 				1F5DF1831BDCA0F500C3A531 /* Contain.swift in Sources */,
 				1F5DF1851BDCA0F500C3A531 /* Equal.swift in Sources */,
 				1F1871DC1CA89EF100A34BF2 /* NMBObjCMatcher.swift in Sources */,
+				1F766B641F1DD54A00C628BC /* DSL+CPPBridge.m in Sources */,
 				F8A1BE311CB3710900031679 /* XCTestObservationCenter+Register.m in Sources */,
 				1FE661591E6574E30035F243 /* ExpectationMessage.swift in Sources */,
 				1FA0C4011E30B14500623165 /* Predicate.swift in Sources */,
@@ -1536,6 +1557,7 @@
 				1F5DF1A41BDCA10200C3A531 /* BeNilTest.swift in Sources */,
 				7A6AB2C41E7F547E00A2F694 /* ToSucceedTest.swift in Sources */,
 				CD79C9A71D2CC848004B6F9A /* ObjCBeGreaterThanTest.m in Sources */,
+				1F766B5C1F1DD2E000C628BC /* SupportsObjCPP.mm in Sources */,
 				CD79C9A51D2CC848004B6F9A /* ObjCBeginWithTest.m in Sources */,
 				347155CC1C337C8900549F03 /* XCTestCaseProvider.swift in Sources */,
 				1F5DF1AA1BDCA10200C3A531 /* RaisesExceptionTest.swift in Sources */,
@@ -1585,6 +1607,7 @@
 				7B13BA061DD360AA00C9098C /* ContainElementSatisfying.swift in Sources */,
 				1F91DD321C74BF61002C309F /* BeVoid.swift in Sources */,
 				1FCF91541C61C8A400B15DCB /* PostNotification.swift in Sources */,
+				1F766B621F1DD54A00C628BC /* DSL+CPPBridge.m in Sources */,
 				DDB4D5EE19FE43C200E9D9FE /* Match.swift in Sources */,
 				29EA59671B551EE6002D767E /* ThrowError.swift in Sources */,
 				1FD8CD5B1968AB07008ED995 /* Equal.swift in Sources */,
@@ -1634,6 +1657,7 @@
 				1F925F0F195C18F500ED456B /* BeLessThanOrEqualToTest.swift in Sources */,
 				1F4A56671A3B305F009E1637 /* ObjCAsyncTest.m in Sources */,
 				1F925EFD195C186800ED456B /* BeginWithTest.swift in Sources */,
+				1F766B5A1F1DD2E000C628BC /* SupportsObjCPP.mm in Sources */,
 				1F925EE2195C0DFD00ED456B /* utils.swift in Sources */,
 				DDB4D5F119FE442800E9D9FE /* MatchTest.swift in Sources */,
 				1F4A56741A3B3210009E1637 /* ObjCBeginWithTest.m in Sources */,

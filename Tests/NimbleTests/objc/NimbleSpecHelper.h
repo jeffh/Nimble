@@ -1,4 +1,8 @@
+#if defined(__has_feature) && __has_feature(modules)
 @import Nimble;
+#else
+#import <Nimble/Nimble.h>
+#endif
 #import "NimbleTests-Swift.h"
 
 // Use this when you want to verify the failure message for when an expectation fails

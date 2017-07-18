@@ -1,6 +1,10 @@
 #import <Nimble/DSL.h>
 #import <Nimble/Nimble-Swift.h>
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wproperty-attribute-mismatch"
+#pragma clang diagnostic ignored "-Wduplicate-method-arg"
+
 SWIFT_CLASS("_TtC6Nimble7NMBWait")
 @interface NMBWait : NSObject
 
@@ -13,14 +17,14 @@ SWIFT_CLASS("_TtC6Nimble7NMBWait")
 NS_ASSUME_NONNULL_BEGIN
 
 
-NIMBLE_EXPORT NIMBLE_OVERLOADABLE NMBExpectation *__nonnull NMB_expect(id __nullable(^actualBlock)(), NSString *__nonnull file, NSUInteger line) {
-    return [[NMBExpectation alloc] initWithActualBlock:actualBlock
-                                              negative:NO
-                                                  file:file
-                                                  line:line];
+NIMBLE_EXPORT NMBExpectationImpl *__nonnull NMB_expect_impl(id __nullable(^actualBlock)(), NSString *__nonnull file, NSUInteger line) {
+    return (id)[[NMBExpectation alloc] initWithActualBlock:actualBlock
+                                                  negative:NO
+                                                      file:file
+                                                      line:line];
 }
 
-NIMBLE_EXPORT NMBExpectation *NMB_expectAction(void(^actualBlock)(), NSString *file, NSUInteger line) {
+NIMBLE_EXPORT NMBExpectationImpl *NMB_expectAction(void(^actualBlock)(), NSString *file, NSUInteger line) {
     return NMB_expect(^id{
         actualBlock();
         return nil;
@@ -39,19 +43,19 @@ NIMBLE_EXPORT id<NMBMatcher> NMB_beAKindOf(Class expectedClass) {
     return [NMBObjCMatcher beAKindOfMatcher:expectedClass];
 }
 
-NIMBLE_EXPORT NIMBLE_OVERLOADABLE NMBObjCBeCloseToMatcher *NMB_beCloseTo(NSNumber *expectedValue) {
-    return [NMBObjCMatcher beCloseToMatcher:expectedValue within:0.001];
+NIMBLE_EXPORT NMBObjCBeCloseToMatcherImpl *NMB_beCloseTo_impl(NSNumber *expectedValue) {
+    return (id)[NMBObjCMatcher beCloseToMatcher:expectedValue within:0.001];
 }
 
 NIMBLE_EXPORT id<NMBMatcher> NMB_beginWith(id itemElementOrSubstring) {
     return [NMBObjCMatcher beginWithMatcher:itemElementOrSubstring];
 }
 
-NIMBLE_EXPORT NIMBLE_OVERLOADABLE id<NMBMatcher> NMB_beGreaterThan(NSNumber *expectedValue) {
+NIMBLE_EXPORT id<NMBMatcher> NMB_beGreaterThan_impl(NSNumber *expectedValue) {
     return [NMBObjCMatcher beGreaterThanMatcher:expectedValue];
 }
 
-NIMBLE_EXPORT NIMBLE_OVERLOADABLE id<NMBMatcher> NMB_beGreaterThanOrEqualTo(NSNumber *expectedValue) {
+NIMBLE_EXPORT id<NMBMatcher> NMB_beGreaterThanOrEqualTo_impl(NSNumber *expectedValue) {
     return [NMBObjCMatcher beGreaterThanOrEqualToMatcher:expectedValue];
 }
 
@@ -63,11 +67,11 @@ NIMBLE_EXPORT id<NMBMatcher> NMB_be(id expectedInstance) {
     return [NMBObjCMatcher beIdenticalToMatcher:expectedInstance];
 }
 
-NIMBLE_EXPORT NIMBLE_OVERLOADABLE id<NMBMatcher> NMB_beLessThan(NSNumber *expectedValue) {
+NIMBLE_EXPORT id<NMBMatcher> NMB_beLessThan_impl(NSNumber *expectedValue) {
     return [NMBObjCMatcher beLessThanMatcher:expectedValue];
 }
 
-NIMBLE_EXPORT NIMBLE_OVERLOADABLE id<NMBMatcher> NMB_beLessThanOrEqualTo(NSNumber *expectedValue) {
+NIMBLE_EXPORT id<NMBMatcher> NMB_beLessThanOrEqualTo_impl(NSNumber *expectedValue) {
     return [NMBObjCMatcher beLessThanOrEqualToMatcher:expectedValue];
 }
 
@@ -121,11 +125,11 @@ NIMBLE_EXPORT id<NMBMatcher> NMB_endWith(id itemElementOrSubstring) {
     return [NMBObjCMatcher endWithMatcher:itemElementOrSubstring];
 }
 
-NIMBLE_EXPORT NIMBLE_OVERLOADABLE id<NMBMatcher> NMB_equal(__nullable id expectedValue) {
+NIMBLE_EXPORT id<NMBMatcher> NMB_equal_impl(__nullable id expectedValue) {
     return [NMBObjCMatcher equalMatcher:expectedValue];
 }
 
-NIMBLE_EXPORT NIMBLE_OVERLOADABLE id<NMBMatcher> NMB_haveCount(id expectedValue) {
+NIMBLE_EXPORT id<NMBMatcher> NMB_haveCount_impl(id expectedValue) {
     return [NMBObjCMatcher haveCountMatcher:expectedValue];
 }
 
@@ -141,8 +145,8 @@ NIMBLE_EXPORT id<NMBMatcher> NMB_satisfyAnyOfWithMatchers(id matchers) {
     return [NMBObjCMatcher satisfyAnyOfMatcher:matchers];
 }
 
-NIMBLE_EXPORT NMBObjCRaiseExceptionMatcher *NMB_raiseException() {
-    return [NMBObjCMatcher raiseExceptionMatcher];
+NIMBLE_EXPORT NMBObjCRaiseExceptionMatcherImpl *NMB_raiseException() {
+    return (id)[NMBObjCMatcher raiseExceptionMatcher];
 }
 
 NIMBLE_EXPORT NMBWaitUntilTimeoutBlock NMB_waitUntilTimeoutBuilder(NSString *file, NSUInteger line) {
@@ -158,3 +162,5 @@ NIMBLE_EXPORT NMBWaitUntilBlock NMB_waitUntilBuilder(NSString *file, NSUInteger 
 }
 
 NS_ASSUME_NONNULL_END
+
+#pragma clang diagnostic pop
